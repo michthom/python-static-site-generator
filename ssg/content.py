@@ -14,20 +14,20 @@ class Content(Mapping):
         # yaml.load, this isn't recursive!
         load(fm, Loader=FullLoader)
 
-        return cls(self.data, content)
+        return cls(content)
 
     def __init__(self, metadata, content):
         self.data = metadata
-        self.data.append("content": content)
+        self.data.append({"content": content})
 
     @property
-    def body():
+    def body(self):
         return self.data["content"]
 
     @property
-    def type():
+    def type(self):
         return self.data["type"]
 
     @type.setter
-    def set_data(data):
+    def set_type(self, data):
         self.data["type"] = data
