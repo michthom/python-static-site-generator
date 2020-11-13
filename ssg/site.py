@@ -6,8 +6,8 @@ class Site:
         self.source = Path(source)
         self.dest = Path(dest)
 
-    def create_dir(self, path=None):
-        directory = self.dest / Path.relative_to(path)
+    def create_dir(self, path):
+        directory = self.dest / path.relative_to(self.source)
         print(f'path: {path}')
         print(f'dest: {self.dest}')
         print(f'directory: {directory}')
@@ -15,7 +15,7 @@ class Site:
         Path.mkdir(directory, parents=True, exist_ok=True)
 
     def build(self):
-        Path.mkdir(self, parents=True, exist_ok=True)
+        self.mkdir(parents=True, exist_ok=True)
         for path in self.source.rglob("*"):
-            if Path.is_dir(path):
-                self.create_dir(path)
+            if path.is_dir():
+                path.create_dir()
