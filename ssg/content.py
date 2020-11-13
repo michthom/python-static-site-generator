@@ -18,7 +18,7 @@ class Content(Mapping):
 
     def __init__(self, metadata, content):
         self.data = metadata
-        self.data.append({"content": content})
+        self.data["content"] = content
 
     @property
     def body(self):
@@ -29,5 +29,5 @@ class Content(Mapping):
         return self.data["type"]
 
     @type.setter
-    def set_type(self, data):
-        self.data["type"] = data
+    def type(self, type):
+        self.data["type"] = type
