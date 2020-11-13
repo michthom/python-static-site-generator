@@ -9,12 +9,12 @@ class Content(Mapping):
 
     @classmethod
     def load(cls, string):
-        (_, fm, content) = Content.__regex.split(string, maxsplit=2)
+        (_, fm, content) = cls.__regex.split(string, 2)
 
         # yaml.load, this isn't recursive!
         load(fm, Loader=FullLoader)
 
-        return cls(content)
+        return cls(self.data, content)
 
     def __init__(self, metadata, content):
         self.data = metadata
@@ -31,3 +31,22 @@ class Content(Mapping):
     @type.setter
     def type(self, type):
         self.data["type"] = type
+
+    def __getitem__(self, key):
+        return self.data[key]
+
+    def __iter__(self):
+        return self.data.__iter__()
+
+    def __len__(self):
+        return len(self.data)
+
+    def __repr__(self):
+        data = {}
+
+        for key, value in self.data.items():
+            if key != "content":
+                data[key] = value
+
+        return str(data)
+
